@@ -1,3 +1,10 @@
+# 忽略模型，日志文件等
+
+models/
+.autodl
+log/
+events.out.tfevents.1724942576.autodl-container-90ef4388d6-390ab45f.11061.0
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
