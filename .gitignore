@@ -2,8 +2,13 @@
 
 models/
 .autodl
-log/
+log/chinese-roberta-wwm-ext-large/*
+# !**/chinese-roberta-wwm-ext-large/09-03_13.45
+
+log/wwm_bert/*
+models/*
 events.out.tfevents.1724942576.autodl-container-90ef4388d6-390ab45f.11061.0
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

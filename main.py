@@ -29,7 +29,7 @@ from sklearn import metrics
 from torch.utils.tensorboard import SummaryWriter
 
 
-'''设置 huggingface 的镜像'''
+# '''设置 huggingface 的镜像'''
 # import os
 # os.environ['HF_ENDPOINT'] = "https://hf-mirror.com"
 
@@ -166,12 +166,12 @@ for epoch in tqdm(range(epochs)):
         scheduler.step()
 
         """这里将来可以使用	tensorboard"""
-        if total_step % 50 == 0:
+        if total_step % len(train_dataloader) == 0:
             print('#########################################################')
-            print(f"    train_data 50 个batch 的平均损失: {loss_sum/50}")
+            print(f"    train_data 每 epoch 平均每个 batch 的损失: {loss_sum/len(train_dataloader)}")
             loss_sum = 0
         '''修改为 1 用于测试'''
-        if total_step % 10 == 1:
+        if total_step % len(train_dataloader) == 0:
             # 每多少轮输出在训练集和验证集上的效果
             # true 为当前 train batch 的 预测值
             true = label.data.cpu()
@@ -237,8 +237,6 @@ for epoch in tqdm(range(epochs)):
             # 验证集loss超过1000batch没下降，结束训练
             print("No optimization for a long time, auto-stopping...")
             flag = True
-            break
-        if flag == True:
             break
 
 torch.save(model.state_dict(), f'{args.save_model_last}')

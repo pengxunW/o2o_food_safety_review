@@ -15,15 +15,15 @@ def parse_args():
     # parser.add_argument('--result_save_path', type=str, default='./data/result/base_bert_result.csv')
     # parser.add_argument('--result_save_path_with_comment', type=str, default='./data/result/bert_TextCNN_result_with_comment.csv')
     # parser.add_argument('--result_save_path', type=str, default='./data/result/bert_TextCNN_result.csv')
-    parser.add_argument('--result_save_path_with_comment', type=str, default='./data/result/bert_wwm_result_with_comment.csv')
-    parser.add_argument('--result_save_path', type=str, default='./data/result/bert_wwm_result.csv')
+    parser.add_argument('--result_save_path_with_comment', type=str, default='./data/result/chinese-roberta-wwm-ext-large_result_with_comment.csv')
+    parser.add_argument('--result_save_path', type=str, default='./data/result/chinese-roberta-wwm-ext-large_result.csv')
     parser.add_argument('--val_ratio', type=float, default=0.1)
 
     # ========================= Learning Configs ==========================
-    parser.add_argument('--batch_size', type=int, default=256)
-    parser.add_argument('--num_epochs', type=int, default=500, help='How many epochs')
+    parser.add_argument('--batch_size', type=int, default=80)
+    parser.add_argument('--num_epochs', type=int, default=50, help='How many epochs')
     parser.add_argument('--warmup_ratio', type=float, default=0.1)
-    parser.add_argument('--learning_rate', default=1e-5, type=float, help='initial learning rate')
+    parser.add_argument('--learning_rate', default=15e-6, type=float, help='initial learning rate')
     
     parser.add_argument("--weight_decay", default=0.01, type=float, help="Weight deay if we apply some.")
     '''这个参数是啥意思， 用在 optimizer()'''
@@ -37,7 +37,9 @@ def parse_args():
     
     parser.add_argument('--device', type=str, default='cuda')
     parser.add_argument('--max_seq_len', type=int, default=100)
-    parser.add_argument("--bert_pred", type=str, default="hfl/chinese-bert-wwm", help="bert 预训练模型")
+  
+    parser.add_argument("--bert_pred", type=str, default="hfl/chinese-roberta-wwm-ext-large", help="bert 预训练模型")
+    # parser.add_argument("--bert_pred", type=str, default="hfl/chinese-bert-wwm", help="bert 预训练模型")
     # parser.add_argument("--bert_pred", type=str, default="bert-base-chinese", help="bert 预训练模型")
     
     # parser.add_argument('--input_size', type=int, default=128)           # bert 中暂时没用到
@@ -49,15 +51,15 @@ def parse_args():
     # parser.add_argument('--num_classes', type=int, default=1)
     parser.add_argument('--num_classes', type=int, default=2)
     # parser.add_argument('--stride', type=int, default=2)
-    parser.add_argument('--require_improvement', type=int, default=500) # 若超过500batch效果还没提升，则提前结束训练
+    parser.add_argument('--require_improvement', type=int, default=400) # 若超过400 batch效果还没提升，则提前结束训练
     
     parser.add_argument('--kernel_size', type=int, default=3)
     parser.add_argument('--model_save_path', type=str, default='./models/base_bert/base_bert_model.pt')
-    parser.add_argument('--log_path', type=str, default='./log/wwm_bert')
+    parser.add_argument('--log_path', type=str, default='./log/chinese-roberta-wwm-ext-large')
     # parser.add_argument('--log_path', type=str, default='./log/bert_TextCNN')
     
     parser.add_argument("--select_model_last", type=bool, default=True, help="选择模型 BertTextModel_last_layer")
-    parser.add_argument("--save_model_best", type=str, default=os.path.join("models/wwm_bert", "best_model.pt"))     # 最佳的    模型
-    parser.add_argument("--save_model_last", type=str, default=os.path.join("models/wwm_bert", "last_model.pt"))     #最后一次保存的模型
+    parser.add_argument("--save_model_best", type=str, default=os.path.join("models/chinese-roberta-wwm-ext-large", "best_model.pt"))     # 最佳的    模型
+    parser.add_argument("--save_model_last", type=str, default=os.path.join("models/chinese-roberta-wwm-ext-large", "last_model.pt"))     #最后一次保存的模型
 
     return parser.parse_args()
