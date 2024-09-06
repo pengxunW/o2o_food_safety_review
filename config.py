@@ -23,7 +23,7 @@ def parse_args():
     parser.add_argument('--batch_size', type=int, default=80)
     parser.add_argument('--num_epochs', type=int, default=50, help='How many epochs')
     parser.add_argument('--warmup_ratio', type=float, default=0.1)
-    parser.add_argument('--learning_rate', default=15e-6, type=float, help='initial learning rate')
+    parser.add_argument('--learning_rate', default=2e-5, type=float, help='initial learning rate')
     
     parser.add_argument("--weight_decay", default=0.01, type=float, help="Weight deay if we apply some.")
     '''这个参数是啥意思， 用在 optimizer()'''
