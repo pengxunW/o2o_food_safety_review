@@ -6,7 +6,7 @@ log/chinese-roberta-wwm-ext-large/*
 # !**/chinese-roberta-wwm-ext-large/09-03_13.45
 
 log/wwm_bert/*
-models/*
+!log/chinese-roberta-wwm-ext-large/09-03_13.45
 events.out.tfevents.1724942576.autodl-container-90ef4388d6-390ab45f.11061.0
 
 
