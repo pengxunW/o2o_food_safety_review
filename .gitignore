@@ -1,14 +1,30 @@
 # 忽略模型，日志文件等
 
-models/
 .autodl
-log/chinese-roberta-wwm-ext-large/*
-# !**/chinese-roberta-wwm-ext-large/09-03_13.45
 
-log/wwm_bert/*
+# 保留文件件的同时忽略生成的 .log 日志文件 
+log/*
+!.gitkeep
+!log/small_sample_test_log
+log/small_sample_test_log/*
+!log/small_sample_test_log/.gitkeep
+
+# 忽略训练生成的模型
 models/*
-events.out.tfevents.1724942576.autodl-container-90ef4388d6-390ab45f.11061.0
+!models/.gitkeep
 
+# 忽略预训练模型
+pretrained_models/*
+
+# 忽略 bert-base-chinese 文件夹下模型权重等
+!pretrained_models/bert-base-chinese
+pretrained_models/bert-base-chinese/*
+!pretrained_models/bert-base-chinese/.gitkeep
+
+# 忽略 uerroberta-base-finetuned-dianping-chinese 文件夹下模型权重等
+!pretrained_models/uerroberta-base-finetuned-dianping-chinese
+pretrained_models/uerroberta-base-finetuned-dianping-chinese/*
+!pretrained_models/uerroberta-base-finetuned-dianping-chinese/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

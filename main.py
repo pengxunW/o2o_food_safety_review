@@ -46,9 +46,8 @@ train_data = pd.read_csv(args.train_data_path)
 dev_data = pd.read_csv(args.dev_data_path)
 
 
-
 """将pretrained model 下载下来，不然每次联网下载大概要一分半, 第二次运行并没有重新下载"""
-'''这是基础的 base_bert '''
+"""这是基础的 base_bert """
 tokenizer = AutoTokenizer.from_pretrained(args.bert_pred)
 
 train_dataset = MyDataSet(train_data, args=args, tokenizer=tokenizer, mode="train")
@@ -76,11 +75,11 @@ print("##############################################################")
 print()
 # 实例化模型并将其移动到device设备上
 
-'''(a) baseModel()'''
+"""(a) baseModel()"""
 root, name = os.path.split(args.save_model_best)
-args.save_model_best = os.path.join(root, str(args.select_model_last) + "_" +name)
+args.save_model_best = os.path.join(root, str(args.select_model_last) + "_" + name)
 root, name = os.path.split(args.save_model_last)
-args.save_model_last = os.path.join(root, str(args.select_model_last) + "_" +name)
+args.save_model_last = os.path.join(root, str(args.select_model_last) + "_" + name)
 
 # 选择模型
 if args.select_model_last:
@@ -91,7 +90,7 @@ else:
     pass
 
 
-'''(b) bert_TexCNN()'''
+"""(b) bert_TexCNN()"""
 # root, name = os.path.split(args.save_model_best)
 # args.save_model_best = os.path.join(root, str(args.select_model_last) + "_" +name)
 # root, name = os.path.split(args.save_model_last)
@@ -116,7 +115,6 @@ print()
 print(model.parameters)
 
 
-
 num_total_steps = args.num_epochs * len(train_dataloader)
 optimizer, scheduler = get_optimizer_and_scheduler(args, model, num_total_steps)
 
@@ -135,17 +133,17 @@ dev_best_loss = float("inf")
 dev_best_F1_score = 0
 last_improve = 0  # 记录上次验证集loss下降的batch数
 flag = False  # 记录是否很久没有效果提升
+
 writer = SummaryWriter(
     log_dir=args.log_path + "/" + time.strftime("%m-%d_%H.%M", time.localtime())
 )
-
 
 for epoch in tqdm(range(epochs)):
 
     print("Epoch [{}/{}]".format(epoch + 1, args.num_epochs))
     start_time = time.time()
-    model.train()
-    
+    model.train()   
+
     for batch in train_dataloader:
 
         optimizer.zero_grad()
@@ -167,37 +165,39 @@ for epoch in tqdm(range(epochs)):
 
         """这里将来可以使用	tensorboard"""
         if total_step % len(train_dataloader) == 0:
-            print('#########################################################')
-            print(f"    train_data 每 epoch 平均每个 batch 的损失: {loss_sum/len(train_dataloader)}")
+            print("#########################################################")
+            print(
+                f"    train_data 每 epoch 平均每个 batch 的损失: {loss_sum/len(train_dataloader)}"
+            )
             loss_sum = 0
-        '''修改为 1 用于测试'''
+        """修改为 1 用于测试"""
         if total_step % len(train_dataloader) == 0:
             # 每多少轮输出在训练集和验证集上的效果
             # true 为当前 train batch 的 预测值
             true = label.data.cpu()
-            '''这里将来可以单独设置分类阈值, 采用sigmoid()'''
+            """这里将来可以单独设置分类阈值, 采用sigmoid()"""
             # predic = torch.where(out >= 0.5, torch.tensor(1), torch.tensor(0))
             # predic = predic.data.cpu()
-            
-            '''采用 softmax()'''
+
+            """采用 softmax()"""
             _, predic = torch.max(out.data, 1)
             predic = predic.detach().cpu()
-            
+ 
             train_acc = metrics.accuracy_score(true, predic)
-            
+
             train_f1_score = metrics.f1_score(true, predic)
-            
+
             dev_acc, dev_f1_score, dev_loss = evaluate(dev_dataloader, model, args)
 
             """可以设置两部分结构，可以分别用 dev_loss 和 dev_fi 来保存模型"""
-            
+
             # if dev_loss < dev_best_loss:
             #     dev_best_loss = dev_loss
             if dev_best_F1_score < dev_f1_score:
                 dev_best_F1_score = dev_f1_score
                 torch.save(
                     model.state_dict(),
-                    f'{args.save_model_best}',
+                    f"{args.save_model_best}",
                 )
                 improve = "*"
                 last_improve = total_step
@@ -208,7 +208,7 @@ for epoch in tqdm(range(epochs)):
             """ 到时候再设置 f1 的输出格式吧"""
             msg = "Iter: {0:>4},|   Train Loss: {1:>4.2},|  Train Acc: {2:>6.2%},|  Train F1_score: {3:>6.2%}\
                 Val Loss: {4:>5.2},|     Val Acc: {5:>6.2%},|   Val F1_score: {6:>6.2%},|   Time: {7} {8}"
-            print('------------------------------------------------------------')
+            print("------------------------------------------------------------")
             print(
                 msg.format(
                     total_step,
@@ -222,7 +222,6 @@ for epoch in tqdm(range(epochs)):
                     improve,
                 )
             )
-    
 
             """train 的 acc 和 loss 只是特定一个 batch 的，而 dev 的 loss 和 acc 是全部验证数据平均一个 batch 的值"""
             writer.add_scalar("loss/train", loss.item(), total_step)
@@ -236,9 +235,8 @@ for epoch in tqdm(range(epochs)):
         if total_step - last_improve > args.require_improvement:
             # 验证集loss超过1000batch没下降，结束训练
             print("No optimization for a long time, auto-stopping...")
-            flag = True
+            flag = True 
             break
 
-torch.save(model.state_dict(), f'{args.save_model_last}')
+torch.save(model.state_dict(), f"{args.save_model_last}")
 a = 1
-

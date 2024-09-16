@@ -69,8 +69,9 @@ class baseModel(nn.Module):
         '''如果采用sigmoid()'''
         # out=torch.sigmoid(out)
         # out = out.squeeze()
-        '''采用 softmax()'''
-        out = F.softmax(out, dim=1)
+        '''采用 softmax(), 使用 nn.crossentropyloss() 里面有softmax(),
+        不需要单独再将模型的预测结果再次 softmax() 一下'''
+        # out = F.softmax(out, dim=1)
         return out
     
 '''这个模型是 bert + TextCNN, 将 bert 最后一层 hidden_state 作为 TextCNN 的输入'''  
