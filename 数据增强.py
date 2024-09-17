@@ -38,26 +38,5 @@ index = key_data.index.to_list()
 key_index_file_path = 'data/数据增强/'
 key_index_file = 'key_index.txt'
  
-if not os.path.exists(key_index_file_path):
-    os.makedirs(key_index_file_path)
-    print(f"{key_index_file_path} 文件路径创建成功！")
-    with open(key_index_file, mode='w',encoding='utf-8') as f:
-        for i in index:
-            if i not in except_index:
-                f.write(str(i) + '\n') 
-else:
-    with open(key_index_file, mode='w',encoding='utf-8') as f:
-        for i in index:
-            if i not in except_index:
-                f.write(str(i) + '\n') 
         
-        
-        
-        
-# data.loc[index,"label"] = 1
-
-# data[["id", "label"]].to_csv(args.result_save_path, index=None, sep=",")
-
-  
-# print(data['label'].value_counts())
 a = 1
