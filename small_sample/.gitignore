@@ -1,8 +1,6 @@
 # 忽略模型，日志文件等
 
 .autodl
-# 暂时忽略 Chapter4 文件夹下的 data 文件夹下的所有内容
-data/*
 
 ## 忽略 small_sample 项目文件夹下的文件等
 
