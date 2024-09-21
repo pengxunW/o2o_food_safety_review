@@ -34,14 +34,14 @@ def parse_args():
         default="./pretrained_models/uerroberta-base-finetuned-dianping-chinese",
         help="bert ptetrained model",
     )
-    parser.add_argument("--batch_size", type=int, default=8)
+    parser.add_argument("--batch_size", type=int, default=64)
     parser.add_argument("--num_epochs", type=int, default=20, help="How many epochs")
     parser.add_argument("--warmup_ratio", type=float, default=0.1)
     parser.add_argument(
-        "--learning_rate", default=15e-6, type=float, help="initial learning rate"
+        "--learning_rate", default=2e-5, type=float, help="initial learning rate"
     )
     # 若超过该 batch 数效果还没提升，则提前结束训练
-    parser.add_argument("--require_improvement", type=int, default=1)
+    parser.add_argument("--require_improvement", type=int, default=5)
 
     # 以上需调整------------------------------------------------------------------
     parser.add_argument("--hidden_size", type=int, default=768)
@@ -59,13 +59,13 @@ def parse_args():
     """这里得修改"""
     # (3) ========================== Small Sample Config =============================
 
-    # 用于方便调试函数的小样本训练集、验证集和测试集
+    # 用于得到最终结果的训练集、验证集和测试集
     parser.add_argument(
         "--train_data_path",
         type=str,
         default="./data/train.csv",
     )
-    # 小样本测试时会用到
+    # 测试时会用到
     # parser.add_argument(
     #     "--valid_data_path",
     #     type=str,
@@ -74,34 +74,34 @@ def parse_args():
     parser.add_argument(
         "--test_data_path",
         type=str,
-        default="./data/test_news.csv",
+        default="./data/test_new.csv",
     )
-    # 小样本超参数保存文件夹
+    # 超参数保存文件夹
     parser.add_argument(
         "--args_folder",
         type=str,
         default=f"./args/{same_time}/",
     )
-    # 小样本日志保存文件夹
+    # 日志保存文件夹
     parser.add_argument(
         "--log_folder",
         type=str,
         default=f"./logs/{same_time}/",
     )
-    # 小样本 tensorboard 可视化文件夹
+    #  tensorboard 可视化文件夹
     parser.add_argument(
         "--tensorboard_folder",
         type=str,
         default=f"./tensorboard/{same_time}/",
     )
-    # 小样本模型保存文件夹
+    # 模型保存文件夹
     # 模型不添加时间信息用于区别，直接选择覆盖，因为 args 已经保存
     parser.add_argument(
         "--model_save_folder",
         type=str,
         default="./models/",
     )
-    # 小样本结果保存文件夹
+    # 结果保存文件夹
     parser.add_argument(
         "--origin_result_folder",
         type=str,

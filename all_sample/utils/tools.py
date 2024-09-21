@@ -112,9 +112,12 @@ def evaluate_epoch(dataloader, model, loss_fn):
             # 默认情况下，loss.item()就是一个batch内单个样本的平均loss
             loss_one_epoch.append(loss.item())
             """(b)采用 softmax(),将预测结果的概率和转换为 1"""
+            
             out = F.softmax(out,dim=1)
             scores, pred_labels = torch.max(out.data, 1)
             pred_labels = pred_labels.detach().cpu().numpy()
+            labels = labels.detach().cpu().numpy()
+            
             all_labels.append(labels)
             all_preds.append(pred_labels)
         # 将 list [batch_0, batch_1,...batch_n] 整个拼接起来，形成一行

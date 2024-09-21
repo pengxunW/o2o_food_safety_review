@@ -26,7 +26,7 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     args = parser.parse_args()
 
-    args_save_path = "./args/09-21_11-21/args.txt"
+    args_save_path = "./args/09-21_17-31/args.txt"
     load_args(args, args_save_path)
 
     k = args.k_fold

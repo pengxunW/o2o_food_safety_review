@@ -43,15 +43,15 @@ if __name__ == "__main__":
     setup_device(args)
     """这里单独的显示，是为了后面使用 Dataloader 打乱时，固定打乱顺序，确保结果可复现"""
     args.seed = 2024
-    args.k_fold = 2
+    args.k_fold = 5
 
     mkdirs(args)
     args.bert_pred = "./pretrained_models/uerroberta-base-finetuned-dianping-chinese"
-    args.batch_size = 8
+    args.batch_size = 64
     args.num_epochs = 20
     args.warmup_ratio = 0.1
-    args.learning_rate = 1e-3
-    args.require_improvement = 1
+    args.learning_rate = 1e-5
+    args.require_improvement = 4
 
     args.max_seq_len = 100
     # 保存超参数
@@ -61,6 +61,8 @@ if __name__ == "__main__":
     """将 log 的 path 更改一下"""
     log_name = "main.log"
     logger = Logger(args, log_name)
+    # 显示使用设备
+    print(f'\n the device is: {args.device}\n')
     print("---------------------------------------------------------")
     print("                   Loading all data...")
     print("---------------------------------------------------------\n")

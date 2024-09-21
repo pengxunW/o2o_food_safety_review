@@ -27,18 +27,20 @@ if __name__ == "__main__":
     # test_data_path
     # model_save_folder, model_name
     # origin_result_folder, final_result_folder
+    # result_save_path
     parser = ArgumentParser()
     args = parser.parse_args()
-    args_save_path = "./args/09-21_11-21/args.txt"
+    args_save_path = "./args/09-21_17-31/args.txt"
     load_args(args, args_save_path)
     """权重这里也要修改"""
     k = args.k_fold
-    weights = [0.5, 0.5]
+    weights = [0.2, 0.3, 0.18, 0.14, 0.18]
+    # weights = [0, 1, 0, 0, 0.]
     test_data_path = args.test_data_path
     origin_result_folder = args.origin_result_folder
     result_folser = args.final_result_folder
-    result_save_path = result_folser + f"sample_result_{k}_fold.csv"
-
+    result_save_path = result_folser + f"result_{k}_fold.csv"
+    # result_save_path = result_folser + f"result_only_use_fold_1.csv"
     """修改部分"""
     result = pd.read_csv(test_data_path, sep=",")
     columns = ["class_0", "class_1"]
