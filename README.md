@@ -1,18 +1,30 @@
 # ccf O2O商铺食品安全相关评论发现
 
-## 1. 怎么运行
+## 1. 项目结构
+
+整个项目的核心文件夹有两个，一个是 **small_sample/**，另一个是 **all_sample/**。
+
+两个文件夹下的代码均可单独运行，唯一不同的点是 small_sample/ 文件夹下的数据是从原始的全量数据中抽取部分，从而方便在本地调试，跑通代码的逻辑结构，(由于本地的算力支持有限)。除此之外，两个文件夹下的代码逻辑结构均相同。
+
+！！！**注意：由于两个文件夹均可以单独看作是独立的完整的项目，在 vscode 中运行时要选择单独的一个文件作为工作目录，否则，会出现相对路径的错误。**
+
+以在本地运行小样本数据为例，具体方式是：在 vscode 中，依次点击 File --> Open Folder --> small_sample，就可以选择 small_sample 作为当前的工作目录。
+
+## 2. 怎么运行
+
+待完善......(9-21)
 
 1. 使用 conda 新创建一个 python==3.8.10 的虚拟环境，之后安装相应的包， pip install -r requirements.txt
-2. 运行 main.py，在 models/chinese-roberta-wwm-ext-large/路径下得到True_best_model.pt
+<!-- 2. 运行 main.py，在 models/chinese-roberta-wwm-ext-large/路径下得到True_best_model.pt
 3. 运行 predict_with_comment.py 在 data/result 得到  chinese-roberta-wwm-ext-large_result_with_comment.csv
 4. 运行 final_result.py 在data/result 得到 chinese-roberta-wwm-ext-large_result.csv 提交线上 F1_score： 0.9282
 5. 模型调参在 config.py
 6. 除了在终端中查看运行时的情况之外，还可以在开启一个终端，键入 tensorboard --logdir=log/chinese-roberta-wwm-ext-large, 点击进入网址，可在线可视化查看模型的运行情况。
-7. 最优结果即是当前文件，可视化结果是在log/chinese-roberta-wwm-ext-large/09-03_13.45/events.out.tfevents.1725342314.autodl-container-f11a41911a-67b4ca11.13877.0
+7. 最优结果即是当前文件，可视化结果是在log/chinese-roberta-wwm-ext-large/09-03_13.45/events.out.tfevents.1725342314.autodl-container-f11a41911a-67b4ca11.13877.0 -->
 
-## 2. 注意事项
+<!-- ## 2. 注意事项
 
-1. 可以逐步打上断点进行调试，观察关键变量每一步的变化。
+1. 可以逐步打上断点进行调试，观察关键变量每一步的变化。 -->
 
 ## 3. 开发日志
 
@@ -43,5 +55,3 @@
 #### 3.2.3. 添加项目的完整运行说明 (9-16)
 
 待完善...
-
-- 比如整个项目的逻辑结构

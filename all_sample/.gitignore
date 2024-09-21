@@ -4,8 +4,47 @@
 # 暂时忽略 Chapter4 文件夹下的 data 文件夹下的所有内容
 data/*
 
-# 暂时忽略 Chapter4 文件夹下的 others 文件夹下的所有内容
+## 忽略 small_sample 项目文件夹下的文件等
+
+# 忽略 others 文件夹下的所有内容
 others/*
+!others/.gitkeep
+
+# 保留 args 文件夹的同时忽略生成的 args.txt 超参数文件
+args/*
+!args/.gitkeep
+
+# 保留 logs 文件夹的同时忽略生成的 .log 日志文件
+logs/*
+!logs/.gitkeep
+
+# 保留 tensorboard 文件夹的同时忽略生成的监测指标可视化文件
+tensorboard/*
+!tensorboard/.gitkeep
+
+# 忽略训练生成的模型
+models/*
+!.gitkeep
+
+## 忽略预训练模型
+
+# 忽略 bert-base-chinese 文件夹下模型权重等
+pretrained_models/bert-base-chinese/*
+!pretrained_models/bert-base-chinese/.gitkeep
+
+# 忽略 uerroberta-base-finetuned-dianping-chinese 文件夹下模型权重等
+pretrained_models/uerroberta-base-finetuned-dianping-chinese/*
+!pretrained_models/uerroberta-base-finetuned-dianping-chinese/.gitkeep
+
+# 暂时忽略 result 文件夹下文件
+result/*
+!result/.gitkeep
+# 保留原始数据文件夹
+# 忽略 small_sample 文件夹下的其他所有问文件夹
+# 其他相关文件夹在 small_sample_test.py 中都可以自动生成
+# 日后再选择保留文件夹和部分结果
+
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
