@@ -10,7 +10,6 @@ import numpy as np
 from transformers import AdamW, get_linear_schedule_with_warmup
 
 
-
 """这里将来要将模型迁移到 gpu 设备上"""
 
 
@@ -23,8 +22,8 @@ def setup_device(args):
 
 def setup_seed(args):
     torch.manual_seed(args.seed)
-    torch.cuda.manual_seed(args.seed) #为CPU设置种子用于生成随机数，以使得结果是确定的 
-    torch.cuda.manual_seed_all(args.seed) #为当前GPU设置随机种子；
+    torch.cuda.manual_seed(args.seed)  # 为CPU设置种子用于生成随机数，以使得结果是确定的
+    torch.cuda.manual_seed_all(args.seed)  # 为当前GPU设置随机种子；
     torch.backends.cudnn.benchmark = False
     torch.backends.cudnn.deterministic = True
     random.seed(args.seed)
@@ -34,15 +33,19 @@ def setup_seed(args):
 
 def get_optimizer_and_scheduler(args, model, num_total_steps):
     # Prepare optimizer and schedule (linear warmup and decay)
+    # 将参数分为两类：需要 weight_decay 和不需要 weight_decay
+
     no_decay = ["bias", "LayerNorm.weight"]
     optimizer_grouped_parameters = [
         {
             "params": [
                 p
-                for n, p in model.named_parameters()
-                if not any(nd in n for nd in no_decay)
+                for n, p in model.named_parameters()  # 获取模型参数的名称和值
+                if not any(
+                    nd in n for nd in no_decay
+                )  # 不包含 "bias" 和 "LayerNorm.weight"
             ],
-            "weight_decay": args.weight_decay,
+            "weight_decay": args.weight_decay,  # 对这些参数应用 weight_decay
         },
         {
             "params": [
@@ -53,11 +56,13 @@ def get_optimizer_and_scheduler(args, model, num_total_steps):
             "weight_decay": 0.0,
         },
     ]
+    # 优化器 (optimizer)
     optimizer = AdamW(
         optimizer_grouped_parameters, lr=args.learning_rate, eps=args.adam_epsilon
     )
 
     """这里看不懂"""
+    # 学习率调度器 (scheduler)
     scheduler = get_linear_schedule_with_warmup(
         optimizer,
         num_warmup_steps=args.warmup_ratio * num_total_steps,
@@ -92,7 +97,9 @@ def train_epoch(train_dataloader, model, loss_fn, optimizer, scheduler):
     return
 
 
-'''该函数用于评估训练集和验证集一轮的损失'''
+"""该函数用于评估训练集和验证集一轮的损失"""
+
+
 def evaluate_epoch(dataloader, model, loss_fn):
 
     loss_one_epoch = []
@@ -112,24 +119,27 @@ def evaluate_epoch(dataloader, model, loss_fn):
             # 默认情况下，loss.item()就是一个batch内单个样本的平均loss
             loss_one_epoch.append(loss.item())
             """(b)采用 softmax(),将预测结果的概率和转换为 1"""
-            
-            out = F.softmax(out,dim=1)
+
+            out = F.softmax(out, dim=1)
             scores, pred_labels = torch.max(out.data, 1)
             pred_labels = pred_labels.detach().cpu().numpy()
             labels = labels.detach().cpu().numpy()
-            
+
             all_labels.append(labels)
             all_preds.append(pred_labels)
         # 将 list [batch_0, batch_1,...batch_n] 整个拼接起来，形成一行
         all_labels = np.concatenate(all_labels)
         all_preds = np.concatenate(all_preds)
-        
+
         acc = metrics.accuracy_score(all_labels, all_preds)
         F1_score = metrics.f1_score(all_labels, all_preds)
         loss_mean = np.mean(loss_one_epoch)
     return (acc, F1_score, loss_mean)
 
-'''将来这里的函数可以删除了'''
+
+"""将来这里的函数可以删除了"""
+
+
 def evaluate(data_loader, model, args):
     model.eval()
     loss_total = 0

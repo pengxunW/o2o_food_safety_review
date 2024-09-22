@@ -41,7 +41,7 @@ def parse_args():
     parser.add_argument("--warmup_ratio", type=float, default=0.1)
     parser.add_argument(
         "--learning_rate", default=15e-6, type=float, help="initial learning rate"
-    )
+    )   
     # 若超过该 batch 数效果还没提升，则提前结束训练
     parser.add_argument("--require_improvement", type=int, default=1)
 
@@ -50,7 +50,7 @@ def parse_args():
     parser.add_argument("--num_classes", type=int, default=2)
 
     parser.add_argument(
-        "--weight_decay", default=0.01, type=float, help="Weight deay if we apply some."
+        "--weight_decay", default=0.01, type=float, help="Weight decay if we apply some."
     )
     """这个参数是啥意思， 用在 optimizer()"""
     parser.add_argument(
