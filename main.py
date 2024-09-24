@@ -37,21 +37,21 @@ from model import baseModel
 from sklearn.model_selection import KFold
 
 if __name__ == "__main__":
+    # 更改 config 中的train_data 和 test_data 的路径
+    # args.k_fold,  args.bert_pred
     args = parse_args()
     setup_seed(args)
     setup_device(args)
     """这里单独的显示，是为了后面使用 Dataloader 打乱时，固定打乱顺序，确保结果可复现"""
     args.seed = 2024
-    args.k_fold = 2
-    """data_count 为 small 时，日志和 tensorboard 就保存在对应的小数据文件夹中"""
-    # # 创建小样本数据所需要的文件夹
-    # args.data_count = "small"
+    args.k_fold = 5
+
     mkdirs(args)
     args.bert_pred = "./pretrained_models/uerroberta-base-finetuned-dianping-chinese"
-    args.batch_size = 8
-    args.num_epochs = 20
+    args.batch_size = 64
+    args.num_epochs = 10
     args.warmup_ratio = 0.1
-    args.learning_rate = 15e-6
+    args.learning_rate = 1e-5
     args.require_improvement = 1
 
     args.max_seq_len = 100
@@ -62,19 +62,18 @@ if __name__ == "__main__":
     """将 log 的 path 更改一下"""
     log_name = "main.log"
     logger = Logger(args, log_name)
+    # 显示使用设备
+    print(f'\n the device is: {args.device}\n')
     print("---------------------------------------------------------")
-    print("                   Loading sample data...")
+    print("                   Loading all data...")
     print("---------------------------------------------------------\n")
     # 如果使用使用交叉验证，在划分数据时，valid_data 就不使用了，直接用 train_data 测试
     start_time = time.time()
 
-    train_data = pd.read_csv(args.train_data_path)
-    valid_data = pd.read_csv(args.valid_data_path)
-    data = pd.concat([train_data, valid_data], axis=0).reset_index(drop=True)
-
+    data = pd.read_csv(args.train_data_path, sep="\t")
     time_dif = get_time_dif(start_time)
     print("----------------------------------------------------------")
-    print("                 Loading data Time usage:", time_dif)
+    print("                 Loading all data Time usage:", time_dif)
     print("----------------------------------------------------------\n")
 
     # 在第一个for循环中，从train_idx和val_idx中采样元素，然后将这些采

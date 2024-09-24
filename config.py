@@ -58,24 +58,35 @@ def parse_args():
 
     """这里得修改"""
     # (3) ========================== Small Sample Config =============================
-
-    # 用于得到最终结果的训练集、验证集和测试集
+    # 用于测试代码结构的训练集、测试集
     parser.add_argument(
         "--train_data_path",
         type=str,
-        default="./data/train.csv",
-    )
+        default="./data/sample_train_data.csv",
+    )    
+    parser.add_argument(
+    "--test_data_path",
+    type=str,
+    default="./data/sample_test_data.csv",
+    )    
+    # 用于得到最终结果的训练集、验证集和测试集
+    # parser.add_argument(
+    #     "--train_data_path",
+    #     type=str,
+    #     default="./data/train.csv",
+    # )
+    # parser.add_argument(
+    #     "--test_data_path",
+    #     type=str,
+    #     default="./data/test_new.csv",
+    # )
+    
     # 测试时会用到
     # parser.add_argument(
     #     "--valid_data_path",
     #     type=str,
     #     default="./data/sample_valid_data.csv",
     # )
-    parser.add_argument(
-        "--test_data_path",
-        type=str,
-        default="./data/test_new.csv",
-    )
     # 超参数保存文件夹
     parser.add_argument(
         "--args_folder",
